@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-db.users.deleteMany({});
+db.users.remove({});
 db.users.insert(
     [
         {

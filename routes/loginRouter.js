@@ -20,11 +20,10 @@ function routes(User,Item){
     async function dbAuthorizer(username, password, callback){
         try{
             // get matching user from db
-            const user = await User.findOne({where: {name : username}})
-            const allUser = await User.findAll();
-            console.log(allUser)
+            const user = await User.find({username : username})
+
             // if username is valid compare passwords
-            let isValid = (user != null) ? await bcrypt.compare(password, user.password) : false;
+            let isValid = (user != null) ? await bcrypt.compare(password, user[0].password) : false;
             callback(null, isValid)
 
         }catch(err){
@@ -36,29 +35,16 @@ function routes(User,Item){
 
     // access all items
     loginRouter.route('/items')
-    .get( async(req, res) => {
-        let items = await Item.findAll()
-        res.json({items})
-    })
+    .get((req, res) => {
+        // console.log( Item.find())
+         Item.find((err, items) => {
+            if(err){
+                return res.send(err);
+            }
+            return res.json(items);
+        });
+    });
 
-    // // create new session
-    // loginRouter.route('/session')
-    // .post(async (req, res) => {
-    //     const thisUser = await User.findOne({
-    //       where: {name: req.body.name}
-    //     })
-    //     if(!thisUser){
-    //       res.send("User not found")
-    //     }else{
-    //       bcrypt.compare(req.body.password, thisUser.password, async (err, result) => {
-    //         if(result){
-    //           res.json(thisUser)
-    //         }else{
-    //           res.send("passwords do not match");
-    //         }
-    //       })
-    //     }
-    //   })
     return loginRouter;
 }
 

@@ -13,9 +13,9 @@ const cookieParser = require("cookie-parser");
 const User = require('./models/userModel');
 const Item = require('./models/itemModel');
 
-const loginRouter = require('./routes/loginRouter')(User,Item);
 const userRouter = require('./routes/userRouter')(User);
 const signupRouter = require('./routes/signupRouter')(User);
+const loginRouter = require('./routes/loginRouter')(User,Item);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
