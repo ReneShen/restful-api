@@ -10,7 +10,10 @@ function routes(User){
     const signupRouter = express.Router();
 
     // Hash the password when creating a new user
-    signupRouter.route('/signup/newuser')
+    signupRouter.route('/signup')
+    .get((req, res) => {
+        res.sendFile(path.join(__dirname, '../public/index.html'))
+    })
     .post((req, res) => {
         const email = req.body.email;
         const password = req.body.password;

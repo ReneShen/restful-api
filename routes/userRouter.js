@@ -5,20 +5,20 @@ function routes(User){
 
     // Routes for all users
     userRouter.route('/users')
-    // .post((req, res) => {
-    //     const user = new User(req.body);
+    .post((req, res) => {
+        const user = new User(req.body);
         
-    //     // Save data to database
-    //     user.save();
-    //     return res.status(201).json(user);
-    // })
+        // Save data to database
+        user.save();
+        return res.status(201).json(user);
+    })
     .get((req, res) => {
         const query = {};
         if(req.query.username) {
             query.username = req.query.username;
         }
 
-        User.find(query, (err, users) => {
+         User.find(query, (err, users) => {
             if(err){
                 return res.send(err);
             }

@@ -11,6 +11,9 @@ const db = mongoose.connect('mongodb://localhost/restful-api')
 const cookieParser = require("cookie-parser");
 
 const User = require('./models/userModel');
+const Item = require('./models/itemModel');
+
+const loginRouter = require('./routes/loginRouter')(User,Item);
 const userRouter = require('./routes/userRouter')(User);
 const signupRouter = require('./routes/signupRouter')(User);
 
@@ -20,6 +23,7 @@ app.use(cookieParser());
 
 app.use('/api', userRouter);
 app.use('/api', signupRouter);
+app.use('/api', loginRouter)
 
 app.get('/' , (req, res)=>{
     res.send('Welcome to my site!')

@@ -1,10 +1,12 @@
 /* eslint-disable no-undef */
+db.users.deleteMany({});
 db.users.insert(
     [
         {
           name: "Leanne Graham",
           username: "Bret",
           email: "Sincere@april.biz",
+          password:"pw",
           address: {
             street: "Kulas Light",
             suite: "Apt. 556",
@@ -28,6 +30,7 @@ db.users.insert(
           name: "Ervin Howell",
           username: "Antonette",
           email: "Shanna@melissa.tv",
+          password:"pw",
           address: {
             street: "Victor Plains",
             suite: "Suite 879",
@@ -51,6 +54,7 @@ db.users.insert(
           name: "Clementine Bauch",
           username: "Samantha",
           email: "Nathan@yesenia.net",
+          password:"pw",
           address: {
             street: "Douglas Extension",
             suite: "Suite 847",
@@ -74,12 +78,13 @@ db.users.insert(
           name: "Patricia Lebsack",
           username: "Karianne",
           email: "Julianne.OConner@kory.org",
+          password:"pw",
           address: {
-        stree: "Hoeger Mall",
-        suit: "Apt. 692",
-        cit: "South Elvis",
-        zipcod: "53919-4257",
-        ge: {
+            stree: "Hoeger Mall",
+            suit: "Apt. 692",
+            cit: "South Elvis",
+            zipcod: "53919-4257",
+            ge: {
               lat: "29.4572",
               lng: "-164.2990"
             }
@@ -97,6 +102,7 @@ db.users.insert(
           name: "Chelsey Dietrich",
           username: "Kamren",
           email: "Lucio_Hettinger@annie.ca",
+          password:"pw",
           address: {
             street: "Skiles Walks",
             suite: "Suite 351",
