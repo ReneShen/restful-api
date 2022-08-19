@@ -1,5 +1,4 @@
 /* eslint-disable no-undef */
-db.users.remove({});
 db.users.insert(
     [
         {

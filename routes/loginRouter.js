@@ -8,8 +8,8 @@ const jwks = require('jwks-rsa');
 function routes(User,Item){
     const loginRouter = express.Router();
 
-    // configure OAuth
-    // To create and access OAuth API token, visit http://auth0.com
+    // configure Auth0 - a 3rd party app setting up OAuth framework
+    // To create and access Auth0 API token, visit http://auth0.com
     const jwtCheck = jwt({
         secret: jwks.expressJwtSecret({
             cache: true,
