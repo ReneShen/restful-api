@@ -8,25 +8,47 @@ const app = express();
 const port = process.env.PORT || 3000;
 const db = mongoose.connect('mongodb://localhost/restful-api')
 
+const { auth } = require('express-openid-connect');
 const cookieParser = require("cookie-parser");
+const { requiresAuth } = require('express-openid-connect');
 
 const User = require('./models/userModel');
-const Item = require('./models/itemModel');
+const Recipe = require('./models/recipeModel');
 
 const userRouter = require('./routes/userRouter')(User);
 const signupRouter = require('./routes/signupRouter')(User);
-const loginRouter = require('./routes/loginRouter')(User,Item);
+const loginRouter = require('./routes/loginRouter')(User,Recipe);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.use('/api', userRouter);
-app.use('/api', signupRouter);
-app.use('/api', loginRouter)
+app.use('/', userRouter);
+app.use('/', signupRouter);
+app.use('/', loginRouter)
 
-app.get('/' , (req, res)=>{
-    res.send('Welcome to my site!')
+// config auth0 webapp
+const config = {
+    authRequired: false,
+    auth0Logout: true,
+    secret: '7e2c7dfc670fc913ec303c395452ef0fa055e0d5712afd77a48b3a72dc472bcd',
+    baseURL: 'http://localhost:4000',
+    clientID: 'jMWLqEozXYAhn7QKanT4GI6qFIC27WwP',
+    issuerBaseURL: 'https://dev-7yqi8at9.us.auth0.com'
+    };
+
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get('/', (req, res) => {
+    // res.send('Welcome to my site!')
+    res.send(req.oidc.isAuthenticated() ? 'Logged in' : 'Logged out');
+    });
+
+// TODO: Find out how to use requiresAuth() for loginrouter
+app.get('/incorrectlogin', requiresAuth(), (req, res) => {
+    res.send(JSON.stringify(req.oidc.user));
 });
 
 app.listen(port , ()=>{
