@@ -2,28 +2,28 @@ const express = require('express');
 
 // const basicAuth = require('express-basic-auth')
 // const bcrypt = require("bcrypt");
-// const {expressjwt:jwt} = require('express-jwt');
-// const jwks = require('jwks-rsa');
+const {expressjwt:jwt} = require('express-jwt');
+const jwks = require('jwks-rsa');
 
-function routes(User,Recipe){
+function routes(User, Recipe){
     const loginRouter = express.Router();
 
     //---------------------------code: configure Auth0--------------------------------//
-    // // A 3rd party identity provider using OAuth framework
-    // // To create and access Auth0 API token, visit http://auth0.com
-    // const jwtCheck = jwt({
-    //     secret: jwks.expressJwtSecret({
-    //         cache: true,
-    //         rateLimit: true,
-    //         jwksRequestsPerMinute: 5,
-    //         jwksUri: 'https://dev-7yqi8at9.us.auth0.com/.well-known/jwks.json'
-    //   }),
-    //   audience: 'http://localhost:4000',
-    //   issuer: 'https://dev-7yqi8at9.us.auth0.com/',
-    //   algorithms: ['RS256']
-    // });
+    // A 3rd party identity provider using OAuth framework
+    // To create and access Auth0 API token, visit http://auth0.com
+    const jwtCheck = jwt({
+        secret: jwks.expressJwtSecret({
+            cache: true,
+            rateLimit: true,
+            jwksRequestsPerMinute: 5,
+            jwksUri: 'https://dev-7yqi8at9.us.auth0.com/.well-known/jwks.json'
+      }),
+      audience: 'https://dev-7yqi8at9.us.auth0.com/api/v2/',
+      issuer: 'https://dev-7yqi8at9.us.auth0.com/',
+      algorithms: ['RS256']
+    });
 
-    // loginRouter.use(jwtCheck);
+    loginRouter.use(jwtCheck);
 
     //---------------------------code: configure basic auth--------------------------------//
     // loginRouter.use(

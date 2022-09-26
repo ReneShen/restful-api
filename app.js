@@ -31,7 +31,7 @@ app.use('/', loginRouter)
 const config = {
     authRequired: false,
     auth0Logout: true,
-    secret: '7e2c7dfc670fc913ec303c395452ef0fa055e0d5712afd77a48b3a72dc472bcd',
+    secret: 'a long, randomly-generated string stored in env',
     baseURL: 'http://localhost:4000',
     clientID: 'jMWLqEozXYAhn7QKanT4GI6qFIC27WwP',
     issuerBaseURL: 'https://dev-7yqi8at9.us.auth0.com'
