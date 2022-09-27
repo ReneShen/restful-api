@@ -5,7 +5,7 @@ db.users.insert(
         name: "SpongeBob SquarePants",
         userName: "sbSquarePants",
         email: "spongebob@krustykrab.po",
-        password:"superSecretpassword",
+        password:"superSecretpassword123",
         address: {
           street: "124 Conch Street",
           city: "Bikini Bottom",

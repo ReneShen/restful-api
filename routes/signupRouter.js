@@ -11,12 +11,18 @@ function routes(User){
 
     // Hash the password when creating a new user
     signupRouter.route('/signup')
-    .get((req, res) => {
-        res.sendFile(path.join(__dirname, '../public/index.html'))
-    })
     .post((req, res) => {
         const email = req.body.email;
         const password = req.body.password;
+
+        // if there's duplicate, render email already exists
+        const userDuplicate = User.find({email : email})
+        if(userDuplicate){
+            // res.send('Email already exists')
+            return res.redirect('/login')
+        }
+
+        // hash the password and create a new user
         bcrypt.hash(password, saltRounds, (err, hash) => {
             Object.keys(req.body).forEach((key) => {
                 if(key === "password") {

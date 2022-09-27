@@ -1,9 +1,11 @@
+/* eslint-disable no-undef */
 const express = require('express');
 
 // const basicAuth = require('express-basic-auth')
 // const bcrypt = require("bcrypt");
 const {expressjwt:jwt} = require('express-jwt');
 const jwks = require('jwks-rsa');
+const bcrypt = require("bcrypt");
 
 function routes(User, Recipe){
     const loginRouter = express.Router();
@@ -51,6 +53,26 @@ function routes(User, Recipe){
     //         callback(null, false)
     //     }
     // }
+
+    // login eligible user
+    loginRouter.route('/login')
+    // .get((req, res) => {
+    //     res.sendFile(path.join(__dirname, '../public/index.html'))
+    // })
+    .get((req, res) => {
+        const email = req.body.email;
+        const password = req.body.password;
+        const query = {};
+        query.email = email;
+
+        User.find(query, (err, user) => {
+            if(err){
+                return res.send(err);
+            }
+            const userDBPassword = user.map(user => user.password);
+            return bcrypt.compare(password, ...userDBPassword) ? res.redirect('/recipes') : res.send('Invalid password, please try again.')
+        });
+    })
 
     // access all recipes
     loginRouter.route('/recipes')
